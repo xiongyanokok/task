@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.hexun</groupId>
+		<artifactId>task</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>task-common</artifactId>
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/*.*</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.hexun</groupId>
+			<artifactId>online-common</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.hexun</groupId>
+			<artifactId>es-interface</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.hexun</groupId>
+			<artifactId>px-interface</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.hexun</groupId>
+			<artifactId>cdsq-interface</artifactId>
+		</dependency>
+		
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<!-- spring -->
+		
+		<!-- hwcommon -->
+		<dependency>
+			<groupId>com.hexun</groupId>
+			<artifactId>hwcommon</artifactId>
+			<classifier>jdk8</classifier>
+		</dependency>
+		<!-- hwcommon -->
+		
+		<!-- dubbox -->
+		<dependency>
+			<groupId>com.hexun</groupId>
+			<artifactId>dubbo-ext</artifactId>
+		</dependency>
+		<!-- dubbox -->
+		
+		<!-- zookeeper -->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+        </dependency>
+        <!-- zookeeper -->
+
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+		<!-- slf4j -->
+
+		<!-- logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<!-- logback -->
+		
+		<!-- disconf -->
+		<dependency>
+			<groupId>com.baidu.disconf</groupId>
+			<artifactId>disconf-client</artifactId>
+		</dependency>
+		<!-- disconf -->
+		
+		<!-- collections4 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-collections4</artifactId>
+		</dependency>
+		<!-- collections4 -->
+		
+	</dependencies>
+</project>

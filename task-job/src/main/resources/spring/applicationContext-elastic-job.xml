@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+       xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.dangdang.com/schema/ddframe/reg
+       http://www.dangdang.com/schema/ddframe/reg/reg.xsd
+       http://www.dangdang.com/schema/ddframe/job
+       http://www.dangdang.com/schema/ddframe/job/job.xsd">
+
+	<!-- 任务注册中心 -->
+    <reg:zookeeper id="registryCenter" 
+    			server-lists="${zookeeper.address}" 
+		    	namespace="task-job"
+		    	base-sleep-time-milliseconds="1000" 
+		    	max-sleep-time-milliseconds="3000" 
+		    	max-retries="3" />
+    	
+    <!-- 任务分片 -->
+	<bean id="taskSharding" class="com.hexun.job.sharding.TaskSharding">
+    	<property name="registryCenter" ref="registryCenter"/>
+    </bean>
+    
+    <!-- 每周一，1点执行一次 -->  
+	<job:simple id="classFullDoseTask"
+				class="com.hexun.task.job.es.lesson.ClassFullDoseTask"
+              	registry-center-ref="registryCenter"
+              	cron="0 0 1 ? * MON"
+              	sharding-total-count="2"
+              	misfire="false"
+              	overwrite="true"
+              	disabled="true"
+              	description="课程全量索引任务"/>
+              
+  	<!-- 10分钟执行一次 -->
+	<job:simple id="classIncrementTask"
+              	class="com.hexun.task.job.es.lesson.ClassIncrementTask"
+              	registry-center-ref="registryCenter"
+              	cron="0 */10 * * * ?"
+              	sharding-total-count="2"
+              	misfire="false"
+              	overwrite="true"
+              	description="课程增量索引任务"/>
+                
+	<!-- 每周一，2点执行一次 -->  
+	<job:simple id="articleFullDoseTask"
+              	class="com.hexun.task.job.es.article.ArticleFullDoseTask"
+              	registry-center-ref="registryCenter"
+              	cron="0 0 2 ? * MON"
+              	sharding-total-count="2"
+              	misfire="false"
+              	overwrite="true"
+              	disabled="true"
+              	description="文章全量索引任务"/>
+    
+	<!-- 每天0点20分执行 -->
+	<job:simple id="articleAccessTask"
+              	class="com.hexun.task.job.es.article.ArticleAccessTask"
+              	registry-center-ref="registryCenter"
+              	cron="0 20 0 * * ?"
+              	sharding-total-count="2"
+              	misfire="false"
+              	overwrite="true"
+              	description="更新文章访问数任务"/>              
+    
+</beans>

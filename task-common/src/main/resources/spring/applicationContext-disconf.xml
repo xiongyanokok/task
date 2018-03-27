@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd   
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 第一次扫描：
+		1，初始化Disconf-client自己的配置模块。
+		2，初始化Scan模块。
+		3，初始化Core模块，并极联初始化Watch，Fetcher，Restful模块。
+		4，扫描用户类，整合分布式配置注解相关的静态类信息至配置仓库里。
+		5，执行Core模块，从disconf-web平台上下载配置数据：配置文件下载到本地，配置项直接下载。
+		6，配置文件和配置项的数据会注入到配置仓库里。
+		7，使用watch模块为所有配置关联ZK上的结点。
+	 -->
+	<bean class="com.baidu.disconf.client.DisconfMgrBean" destroy-method="destroy">
+		<property name="scanPackage" value="com.hexun.es.disconf"/>
+	</bean>
+	
+	<!-- 第二次扫描：
+		1，将配置更新回调实例放到配置仓库里
+		2，为配置实例注入值。
+	 -->
+	<bean class="com.baidu.disconf.client.DisconfMgrBeanSecond" init-method="init" destroy-method="destroy"/>
+
+	<!-- 使用托管方式的disconf配置(无代码侵入, 配置更改会自动reload)-->
+	<bean id="configproperties_disconf" class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+	    <property name="locations">
+	        <list>
+	        	<value>classpath:common.properties</value>
+	            <value>classpath:logback.xml</value>
+	        </list>
+	    </property>
+	</bean>
+	
+	<bean id="propertyConfigurer" class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer">
+	    <property name="ignoreResourceNotFound" value="true" />
+	    <property name="ignoreUnresolvablePlaceholders" value="true" />
+	    <property name="propertiesArray">
+	        <list>
+	            <ref bean="configproperties_disconf"/>
+	        </list>
+	    </property>
+	</bean>
+</beans>

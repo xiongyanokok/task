@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 消费方应用名称 -->
+	<dubbo:application name="consumer" />
+
+	<!-- 使用zookeeper作为注册中心，zookeeper服务器地址 -->
+	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" />
+
+	<!-- 培训平台 RPC服务 -->
+	<dubbo:reference id="classService" interface="com.hexun.px.service.ClassService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="classPackService" interface="com.hexun.px.service.ClassPackService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="classSectionService" interface="com.hexun.px.service.ClassSectionService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="openClassService" interface="com.hexun.px.service.OpenClassService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="openForKjService" interface="com.hexun.px.service.OpenForKjService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="visitInfoService" interface="com.hexun.px.service.VisitInfoService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="commentRateService" interface="com.hexun.px.service.CommentRateService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="visitNumService" interface="com.hexun.px.service.VisitNumService" check="false" protocol="dubbo" timeout="10000"/>
+	
+	<!-- 财道社区 RPC服务 -->
+	<dubbo:reference id="articleService" interface="com.hexun.cdsq.service.article.ArticleService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="articleAccessService" interface="com.hexun.cdsq.service.article.ArticleAccessService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="articleLikeService" interface="com.hexun.cdsq.service.article.ArticleLikeService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="columnService" interface="com.hexun.cdsq.service.article.ColumnService" check="false" protocol="dubbo" timeout="10000"/>
+	
+	<!-- 搜索系统 RPC服务 -->
+	<dubbo:reference id="searchClassService" interface="com.hexun.es.service.SearchClassService" check="false" protocol="dubbo" timeout="10000"/>
+	<dubbo:reference id="searchArticleService" interface="com.hexun.es.service.SearchArticleService" check="false" protocol="dubbo" timeout="10000" />
+</beans>
